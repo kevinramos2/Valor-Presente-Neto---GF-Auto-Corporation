@@ -2,8 +2,6 @@
 import random
 import math
 
-#Unidades vendidas
-
 #Calcular la margen por año
 def margen(x):
   #Iniciamos la lista que almacenará el margen por año
@@ -136,6 +134,11 @@ def flujoCaja(depreciacion, utilidadDespuesImpuestos):
   #Retornamos la lista
   return flujo
 
+#Función para calcular el Valor Presente Neto VPN
+def valorPresenteNeto(flujoCaja,interes,periodos):
+  vpnTotal = []
+  
+  return vpnTotal
 
 #Llamamos y guardamos la lista de porcentajes de disminución
 disminucion = disminucionDemanda()
@@ -151,10 +154,15 @@ depreciacion = depreciacion()
 utilidadAntesImpuestos = utilidadAImp(contribucion,depreciacion)
 #Llamamos y guardamos la lista de la utilidad después de los impuestos
 utilidadDespuesImpuestos = utilidadDImp(utilidadAntesImpuestos)
-#Llamamos y guardamos la lsita del flujo de la caja
+#Llamamos y guardamos la lista del flujo de la caja
 flujoCaja = flujoCaja(depreciacion,utilidadDespuesImpuestos)
-
-
+#Periodos
+periodos = [1,2,3,4,5]
+#Interés
+interes = 0.1
+#Llamamos y guardamos la lista del VPN (Valor Presente Neto)
+vpn = valorPresenteNeto(flujoCaja,interes,periodos)
+print(interes)
 print("La disminución de la demanda es: ", disminucion)
 print("Las unidades vendidas en los 5 años es: ",ventas)
 #Calculamos el margen en los 5 años
@@ -167,8 +175,10 @@ print("La depreciación en los 5 años es: ", depreciacion)
 print("La utilidad antes de impuestos en los 5 años es: ", utilidadAntesImpuestos)
 #Calculamos la utilidad después de impuestos
 print("La utilidad después de impuestos en los 5 años es: ", utilidadDespuesImpuestos)
-#Calculamos el flujo de la caja
-print("El flujo de la caja es en los 5 años es: ", flujoCaja)
+#Calculamos el flujo neto de la caja
+print("El flujo neto de la caja es en los 5 años es: ", flujoCaja)
+#Calculamos el VPN (Valor Presente Neto)
+print("El valor presente neto es: ", )
 
 
 
