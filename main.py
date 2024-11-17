@@ -140,7 +140,7 @@ def valorPresenteNeto(flujoCaja,interes,periodos):
   vpnTotal = 0
   #Ciclo donde calcularemos el VPN por la sumatoria
   for i in range(5):
-    vpnTotal += flujoCaja[i]//(1+interes)**periodos[i]
+    vpnTotal += int(flujoCaja[i]//(1+interes)**periodos[i])
     print(vpnTotal)
   #Retornamos el valor del VPN
   return vpnTotal
@@ -167,7 +167,6 @@ periodos = [1,2,3,4,5]
 interes = 0.1
 #Llamamos y guardamos la lista del VPN (Valor Presente Neto)
 vpn = valorPresenteNeto(flujoCaja,interes,periodos)
-print(interes)
 print("La disminución de la demanda es: ", disminucion)
 print("Las unidades vendidas en los 5 años es: ",ventas)
 #Calculamos el margen en los 5 años
@@ -183,7 +182,7 @@ print("La utilidad después de impuestos en los 5 años es: ", utilidadDespuesIm
 #Calculamos el flujo neto de la caja
 print("El flujo neto de la caja es en los 5 años es: ", flujoCaja)
 #Calculamos el VPN (Valor Presente Neto)
-print("El valor presente neto es: ", )
+print("El valor presente neto es: ", vpn )
 
 
 
