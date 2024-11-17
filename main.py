@@ -170,7 +170,7 @@ vpn = valorPresenteNeto(flujoCaja,interes,periodos)
 print("La disminución de la demanda es: ", disminucion)
 print("Las unidades vendidas en los 5 años es: ",ventas)
 #Calculamos el margen en los 5 años
-print("La margen en los 5 años es: ",margen)
+print("El margen en los 5 años es: ",margen)
 #Calculamos ahora la contribución
 print("La contribución en los 5 años es: ", contribucion)
 #Calculamos la depreciación
