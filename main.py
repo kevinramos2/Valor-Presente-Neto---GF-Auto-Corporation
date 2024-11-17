@@ -136,8 +136,13 @@ def flujoCaja(depreciacion, utilidadDespuesImpuestos):
 
 #Función para calcular el Valor Presente Neto VPN
 def valorPresenteNeto(flujoCaja,interes,periodos):
-  vpnTotal = []
-  
+  #Variable donde quedará almacenado el valor del VPN
+  vpnTotal = 0
+  #Ciclo donde calcularemos el VPN por la sumatoria
+  for i in range(5):
+    vpnTotal += flujoCaja[i]//(1+interes)**periodos[i]
+    print(vpnTotal)
+  #Retornamos el valor del VPN
   return vpnTotal
 
 #Llamamos y guardamos la lista de porcentajes de disminución
