@@ -83,7 +83,23 @@ def contribucion(margen,ventas):
   #Retornamos la lista de las contribuciones
   return contribuciones
 
-#Función para calcular la depreciación
+#Función para calcular la depreciación con costo variable
+def depreciacionCostoVariable():
+  #Iniciamos la lista que contendrá la depreciación en cada año
+  depreciacionTotal = []
+  #Lo calculamos como costoDesarrollo/VidaUtil
+  costoDesarrollo = triangular(600,650,850)
+  dep = costoDesarrollo//5
+  #En un ciclo que itere los 5 años
+  for i in range(5):
+    #Añadimos el mismo valor a la lista
+    depreciacionTotal.append(dep)
+  #Retornamos la lista de la depreciación
+  return depreciacionTotal
+
+
+
+#Función para calcular la depreciación con costo fijo
 def depreciacion():
   #Iniciamos la lista que contendrá la depreciación en cada año
   depreciacionTotal = []
@@ -145,8 +161,28 @@ def valorPresenteNeto(flujoCaja,interes,periodos):
   #Retornamos el valor del VPN
   return vpnTotal
 
-#Función para calcular 10000 simulaciones
-def simular10kVPN():
+#Función para calcular 10000 simulaciones con costos variable (se distribuye triangular)
+def simular10kVPNCostoVariable():
+  resultados = []
+  for i in range(10000):
+    disminucion = disminucionDemanda()
+    margenSim = margen(4000)
+    ventasSim = ventas(disminucion)
+    contribucionSim = contribucion(margenSim,ventasSim)
+    depreciacionSim = depreciacionCostoVariable()
+    utilidadAntesImpuestosSim = utilidadAImp(contribucionSim,depreciacionSim)
+    utilidadDespuesImpuestosSim = utilidadDImp(utilidadAntesImpuestosSim)
+    flujoCajaSim = flujoCaja(depreciacionSim,utilidadDespuesImpuestosSim)
+    #Periodos
+    periodos = [1,2,3,4,5]
+    #Interés
+    interes = 0.1
+    #Llamamos y guardamos la lista del VPN (Valor Presente Neto)
+    vpnSim = valorPresenteNeto(flujoCajaSim,interes,periodos)
+    resultados.append(vpnSim)
+  return resultados
+#Función para calcular 10000 simulaciones con costo fijo
+def simular10kVPNCostoFijo():
   resultados = []
   for i in range(10000):
     disminucion = disminucionDemanda()
@@ -167,9 +203,9 @@ def simular10kVPN():
   return resultados
 
 #Función para calcular el número N de simulaciones requeridas
-def calcularN():
+def calcularNCostoFijo():
   #Simular 10000 veces VPN
-  muestra10k = simular10kVPN()
+  muestra10k = simular10kVPNCostoFijo()
   #Calcular la desviación estándar de la muestra
   desviacion = np.std(muestra10k)
   #Número de precisión dado por el ejercicio
@@ -181,8 +217,23 @@ def calcularN():
   #retornamos los valores
   return int(n),desviacion
 
-#Función para calcular 10000 simulaciones
-def simularNVeces(N):
+#Función para calcular el número N de simulaciones requeridas
+def calcularNCostoVariable():
+  #Simular 10000 veces VPN
+  muestra10k = simular10kVPNCostoVariable()
+  #Calcular la desviación estándar de la muestra
+  desviacion = np.std(muestra10k)
+  #Número de precisión dado por el ejercicio
+  precision = 1000000
+  #Valor de X para el nivel de confianza 95%
+  z = 1.96
+  #Usar la fórmula para hallar el número n requerido
+  n = ((z**2) * (desviacion**2)) / (precision**2)
+  #retornamos los valores
+  return int(n),desviacion
+
+#Función para calcular N simulaciones con COSTO FIJO
+def simularNVecesFijo(N):
   resultados = []
   for i in range(N):
     disminucion = disminucionDemanda()
@@ -202,40 +253,44 @@ def simularNVeces(N):
     resultados.append(vpnSim)
   return resultados
 
+
+#Función para calcular N simulaciones con COSTO FIJO
+def simularNVecesVariable(N):
+  resultados = []
+  for i in range(N):
+    disminucion = disminucionDemanda()
+    margenSim = margen(4000)
+    ventasSim = ventas(disminucion)
+    contribucionSim = contribucion(margenSim,ventasSim)
+    depreciacionSim = depreciacionCostoVariable()
+    utilidadAntesImpuestosSim = utilidadAImp(contribucionSim,depreciacionSim)
+    utilidadDespuesImpuestosSim = utilidadDImp(utilidadAntesImpuestosSim)
+    flujoCajaSim = flujoCaja(depreciacionSim,utilidadDespuesImpuestosSim)
+    #Periodos
+    periodos = [1,2,3,4,5]
+    #Interés
+    interes = 0.1
+    #Llamamos y guardamos la lista del VPN (Valor Presente Neto)
+    vpnSim = valorPresenteNeto(flujoCajaSim,interes,periodos)
+    resultados.append(vpnSim)
+  return resultados
+
 #PARTE MAIN DEL CÓDIGO
 
-nRequerido, desviacion = calcularN()
-print("De una muestra de 10000 simulaciones, la desviación estándar de dicha muestra es de: ", desviacion)
-print("El número de simulaciones requeridas es: ", nRequerido)
+nRequerido, desviacion = calcularNCostoFijo()
 print()
-resultadosN = simularNVeces(nRequerido)
-print("Los resultados con N simulaciones son: ")
+print("De una muestra de 10000 simulaciones con costo fijo, la desviación estándar de dicha muestra es de: ", desviacion)
+print("El número de simulaciones requeridas es: ", nRequerido)
+resultadosFijo = simularNVecesFijo(nRequerido)
+print(np.std(resultadosFijo))
+print()
 
-#
-#disminucion = disminucionDemanda()
-#margen = margen(4000)
-#ventas = ventas(disminucion)
-#contribucion = contribucion(margen,ventas)
-#depreciacion = depreciacion()
-#utilidadAntesImpuestos = utilidadAImp(contribucion,depreciacion)
-#utilidadDespuesImpuestos = utilidadDImp(utilidadAntesImpuestos)
-#flujoCaja = flujoCaja(depreciacion,utilidadDespuesImpuestos)
-##Periodos
-#periodos = [1,2,3,4,5]
-##Interés
-#interes = 0.1
-#
-##Llamamos y guardamos la lista del VPN (Valor Presente Neto)
-#vpn = valorPresenteNeto(flujoCaja,interes,periodos)
-#print("La disminución de la demanda es: ",disminucion)
-#print("Las unidades vendidas en los 5 años es: ",ventas)
-#print("El margen en los 5 años es: ",margen)
-#print("La contribución en los 5 años es: ",contribucion)
-#print("La depreciación en los 5 años es: ",depreciacion)
-#print("La utilidad antes de impuestos en los 5 años es: ",utilidadAntesImpuestos)
-#print("La utilidad después de impuestos en los 5 años es: ",utilidadDespuesImpuestos)
-#print("El flujo neto de la caja es en los 5 años es: ",flujoCaja)
-#print("El valor presente neto es: ",vpn )
+nRequerido2, desviacion2 = calcularNCostoVariable()
+print("De una muestra de 10000 simulaciones con costo variable, la desviación estándar de dicha muestra es de: ", desviacion2)
+print("El número de simulaciones requeridas es: ", nRequerido2)
+resultadosVar = simularNVecesVariable(nRequerido2)
+print(np.std(resultadosVar))
+print()
 
 
 
