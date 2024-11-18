@@ -293,6 +293,7 @@ ic_inferior = mediaVPNFIJO - margenError
 ic_superior = mediaVPNFIJO + margenError
 print("IC 95% Inferior: ", ic_inferior)
 print("IC 95% Superior: ", ic_superior)
+print("La media para VPNs con costo fijo es: ",mediaVPNFIJO)
 print()
 
 nRequerido2, desviacion2 = calcularNCostoVariable()
@@ -302,12 +303,14 @@ resultadosVar = simularNVecesVariable(nRequerido2)
 # Cálculo del intervalo de confianza del 95%
 Z = 1.96  # valor z para 95% de confianza
 desVPNVAR = np.std(resultadosVar)
-mediaVPNVAR = np.mean(resultadosFijo)
-margenError = Z * (desVPNVAR / math.sqrt(nRequerido))
+mediaVPNVAR = np.mean(resultadosVar)
+margenError = Z * (desVPNVAR / math.sqrt(nRequerido2))
 ic_inferior2 = mediaVPNVAR - margenError
 ic_superior2 = mediaVPNVAR + margenError
+
 print("IC 95% Inferior: ", ic_inferior2)
 print("IC 95% Superior: ", ic_superior2)
+print("La media para VPNs con costo variable es: ",mediaVPNVAR)
 print()
 # Crear el histograma
 plt.figure(figsize=(10, 6))
