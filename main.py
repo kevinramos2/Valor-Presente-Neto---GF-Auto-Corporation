@@ -150,18 +150,20 @@ def simular10kVPN():
   resultados = []
   for i in range(10000):
     disminucion = disminucionDemanda()
-    margen_simu = margen(4000)
-    ventas_simu = ventas(disminucion)
-    contribucion_simu = contribucion(margen_simu,ventas_simu)
-    depreciacion_simu = depreciacion()
-    utilidadAI_simu = utilidadAImp(contribucion_simu,depreciacion_simu)
-    utilidadDI_simu = utilidadAImp(utilidadAI_simu,depreciacion_simu)
-    FCA_simu = flujoCaja(depreciacion_simu,utilidadDI_simu)
-    periodos = [1, 2, 3, 4, 5]
+    margenSim = margen(4000)
+    ventasSim = ventas(disminucion)
+    contribucionSim = contribucion(margenSim,ventasSim)
+    depreciacionSim = depreciacion()
+    utilidadAntesImpuestosSim = utilidadAImp(contribucionSim,depreciacionSim)
+    utilidadDespuesImpuestosSim = utilidadDImp(utilidadAntesImpuestosSim)
+    flujoCajaSim = flujoCaja(depreciacionSim,utilidadDespuesImpuestosSim)
+    #Periodos
+    periodos = [1,2,3,4,5]
+    #Interés
     interes = 0.1
-    #Calcular el VPN para esta simulación
-    vpn_sim = valorPresenteNeto(FCA_simu,interes,periodos)
-    resultados.append(vpn_sim)
+    #Llamamos y guardamos la lista del VPN (Valor Presente Neto)
+    vpnSim = valorPresenteNeto(flujoCajaSim,interes,periodos)
+    resultados.append(vpnSim)
   return resultados
 
 #Función para calcular el número N de simulaciones requeridas
@@ -177,50 +179,42 @@ def calcularN():
   #Usar la fórmula para hallar el número n requerido
   n = ((z**2) * (desviacion**2)) / (precision**2)
   #retornamos los valores
-  return n,desviacion
+  return int(n),desviacion
+
+
+#PARTE MAIN DEL CÓDIGO
 
 nRequerido, desviacion = calcularN()
 print("De una muestra de 10000 simulaciones, la desviación estándar de dicha muestra es de: ", desviacion)
 print("El número de simulaciones requeridas es: ", nRequerido)
+print()
+print("Los resultados con N simulaciones son: ")
 
-#Llamamos y guardamos la lista de porcentajes de disminución
-disminucion = disminucionDemanda()
-#Llamamos y guardamos la lista del margen por unidad
-margen = margen(4000)
-#Llamamos y guardamos la lista de las unidades vendidas
-ventas = ventas(disminucion)
-#Llamamos y guardamos la lista de la contribución
-contribucion = contribucion(margen,ventas)
-#Llamamos y guardamos la lista de la depreciación
-depreciacion = depreciacion()
-#Llamamos y guardamos la lista de la utilidad antes de los impuestos
-utilidadAntesImpuestos = utilidadAImp(contribucion,depreciacion)
-#Llamamos y guardamos la lista de la utilidad después de los impuestos
-utilidadDespuesImpuestos = utilidadDImp(utilidadAntesImpuestos)
-#Llamamos y guardamos la lista del flujo de la caja
-flujoCaja = flujoCaja(depreciacion,utilidadDespuesImpuestos)
-#Periodos
-periodos = [1,2,3,4,5]
-#Interés
-interes = 0.1
-#Llamamos y guardamos la lista del VPN (Valor Presente Neto)
-vpn = valorPresenteNeto(flujoCaja,interes,periodos)
-print("La disminución de la demanda es: ",disminucion)
-print("Las unidades vendidas en los 5 años es: ",ventas)
-#Calculamos el margen en los 5 años
-print("El margen en los 5 años es: ",margen)
-#Calculamos ahora la contribución
-print("La contribución en los 5 años es: ",contribucion)
-#Calculamos la depreciación
-print("La depreciación en los 5 años es: ",depreciacion)
-#Calculamos la utilidad antes de impuestos
-print("La utilidad antes de impuestos en los 5 años es: ",utilidadAntesImpuestos)
-#Calculamos la utilidad después de impuestos
-print("La utilidad después de impuestos en los 5 años es: ",utilidadDespuesImpuestos)
-#Calculamos el flujo neto de la caja
-print("El flujo neto de la caja es en los 5 años es: ",flujoCaja)
-#Calculamos el VPN (Valor Presente Neto)
-print("El valor presente neto es: ",vpn )
+#
+#disminucion = disminucionDemanda()
+#margen = margen(4000)
+#ventas = ventas(disminucion)
+#contribucion = contribucion(margen,ventas)
+#depreciacion = depreciacion()
+#utilidadAntesImpuestos = utilidadAImp(contribucion,depreciacion)
+#utilidadDespuesImpuestos = utilidadDImp(utilidadAntesImpuestos)
+#flujoCaja = flujoCaja(depreciacion,utilidadDespuesImpuestos)
+##Periodos
+#periodos = [1,2,3,4,5]
+##Interés
+#interes = 0.1
+#
+##Llamamos y guardamos la lista del VPN (Valor Presente Neto)
+#vpn = valorPresenteNeto(flujoCaja,interes,periodos)
+#print("La disminución de la demanda es: ",disminucion)
+#print("Las unidades vendidas en los 5 años es: ",ventas)
+#print("El margen en los 5 años es: ",margen)
+#print("La contribución en los 5 años es: ",contribucion)
+#print("La depreciación en los 5 años es: ",depreciacion)
+#print("La utilidad antes de impuestos en los 5 años es: ",utilidadAntesImpuestos)
+#print("La utilidad después de impuestos en los 5 años es: ",utilidadDespuesImpuestos)
+#print("El flujo neto de la caja es en los 5 años es: ",flujoCaja)
+#print("El valor presente neto es: ",vpn )
 
 
 
