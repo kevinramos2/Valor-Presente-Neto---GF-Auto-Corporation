@@ -1,6 +1,7 @@
 #Código hecho por Kevin Ramos
 import random
 import math
+import numpy as np
 
 #Calcular la margen por año
 def margen(x):
@@ -140,10 +141,47 @@ def valorPresenteNeto(flujoCaja,interes,periodos):
   vpnTotal = 0
   #Ciclo donde calcularemos el VPN por la sumatoria
   for i in range(5):
-    vpnTotal += int(flujoCaja[i]//(1+interes)**periodos[i])
-    print(vpnTotal)
+    vpnTotal += (flujoCaja[i]/(1+interes)**periodos[i])
   #Retornamos el valor del VPN
   return vpnTotal
+
+#Función para calcular 10000 simulaciones
+def simular10kVPN():
+  resultados = []
+  for i in range(10000):
+    disminucion = disminucionDemanda()
+    margen_simu = margen(4000)
+    ventas_simu = ventas(disminucion)
+    contribucion_simu = contribucion(margen_simu,ventas_simu)
+    depreciacion_simu = depreciacion()
+    utilidadAI_simu = utilidadAImp(contribucion_simu,depreciacion_simu)
+    utilidadDI_simu = utilidadAImp(utilidadAI_simu,depreciacion_simu)
+    FCA_simu = flujoCaja(depreciacion_simu,utilidadDI_simu)
+    periodos = [1, 2, 3, 4, 5]
+    interes = 0.1
+    #Calcular el VPN para esta simulación
+    vpn_sim = valorPresenteNeto(FCA_simu,interes,periodos)
+    resultados.append(vpn_sim)
+  return resultados
+
+#Función para calcular el número N de simulaciones requeridas
+def calcularN():
+  #Simular 10000 veces VPN
+  muestra10k = simular10kVPN()
+  #Calcular la desviación estándar de la muestra
+  desviacion = np.std(muestra10k)
+  #Número de precisión dado por el ejercicio
+  precision = 1000000
+  #Valor de X para el nivel de confianza 95%
+  z = 1.96
+  #Usar la fórmula para hallar el número n requerido
+  n = ((z**2) * (desviacion**2)) / (precision**2)
+  #retornamos los valores
+  return n,desviacion
+
+nRequerido, desviacion = calcularN()
+print("De una muestra de 10000 simulaciones, la desviación estándar de dicha muestra es de: ", desviacion)
+print("El número de simulaciones requeridas es: ", nRequerido)
 
 #Llamamos y guardamos la lista de porcentajes de disminución
 disminucion = disminucionDemanda()
@@ -167,22 +205,22 @@ periodos = [1,2,3,4,5]
 interes = 0.1
 #Llamamos y guardamos la lista del VPN (Valor Presente Neto)
 vpn = valorPresenteNeto(flujoCaja,interes,periodos)
-print("La disminución de la demanda es: ", disminucion)
+print("La disminución de la demanda es: ",disminucion)
 print("Las unidades vendidas en los 5 años es: ",ventas)
 #Calculamos el margen en los 5 años
 print("El margen en los 5 años es: ",margen)
 #Calculamos ahora la contribución
-print("La contribución en los 5 años es: ", contribucion)
+print("La contribución en los 5 años es: ",contribucion)
 #Calculamos la depreciación
-print("La depreciación en los 5 años es: ", depreciacion)
+print("La depreciación en los 5 años es: ",depreciacion)
 #Calculamos la utilidad antes de impuestos
-print("La utilidad antes de impuestos en los 5 años es: ", utilidadAntesImpuestos)
+print("La utilidad antes de impuestos en los 5 años es: ",utilidadAntesImpuestos)
 #Calculamos la utilidad después de impuestos
-print("La utilidad después de impuestos en los 5 años es: ", utilidadDespuesImpuestos)
+print("La utilidad después de impuestos en los 5 años es: ",utilidadDespuesImpuestos)
 #Calculamos el flujo neto de la caja
-print("El flujo neto de la caja es en los 5 años es: ", flujoCaja)
+print("El flujo neto de la caja es en los 5 años es: ",flujoCaja)
 #Calculamos el VPN (Valor Presente Neto)
-print("El valor presente neto es: ", vpn )
+print("El valor presente neto es: ",vpn )
 
 
 
