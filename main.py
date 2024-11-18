@@ -181,6 +181,26 @@ def calcularN():
   #retornamos los valores
   return int(n),desviacion
 
+#Función para calcular 10000 simulaciones
+def simularNVeces(N):
+  resultados = []
+  for i in range(N):
+    disminucion = disminucionDemanda()
+    margenSim = margen(4000)
+    ventasSim = ventas(disminucion)
+    contribucionSim = contribucion(margenSim,ventasSim)
+    depreciacionSim = depreciacion()
+    utilidadAntesImpuestosSim = utilidadAImp(contribucionSim,depreciacionSim)
+    utilidadDespuesImpuestosSim = utilidadDImp(utilidadAntesImpuestosSim)
+    flujoCajaSim = flujoCaja(depreciacionSim,utilidadDespuesImpuestosSim)
+    #Periodos
+    periodos = [1,2,3,4,5]
+    #Interés
+    interes = 0.1
+    #Llamamos y guardamos la lista del VPN (Valor Presente Neto)
+    vpnSim = valorPresenteNeto(flujoCajaSim,interes,periodos)
+    resultados.append(vpnSim)
+  return resultados
 
 #PARTE MAIN DEL CÓDIGO
 
@@ -188,6 +208,7 @@ nRequerido, desviacion = calcularN()
 print("De una muestra de 10000 simulaciones, la desviación estándar de dicha muestra es de: ", desviacion)
 print("El número de simulaciones requeridas es: ", nRequerido)
 print()
+resultadosN = simularNVeces(nRequerido)
 print("Los resultados con N simulaciones son: ")
 
 #
