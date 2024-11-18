@@ -2,6 +2,7 @@
 import random
 import math
 import numpy as np
+import matplotlib.pyplot as plt
 
 #Calcular la margen por año
 def margen(x):
@@ -308,6 +309,18 @@ ic_superior2 = mediaVPNVAR + margenError
 print("IC 95% Inferior: ", ic_inferior2)
 print("IC 95% Superior: ", ic_superior2)
 print()
+# Crear el histograma
+plt.figure(figsize=(10, 6))
+plt.hist(resultadosFijo, bins=30, color='blue', alpha=0.7, label='VPNs con costo fijo')
+plt.hist(resultadosVar, bins=30, color='orange', alpha=0.7, label='VPNs con costo variable')
 
+# Etiquetas y leyenda
+plt.xlabel('Valor')
+plt.ylabel('Frecuencia')
+plt.title('Distribución de los VPNs para costos fijos y variables')
+plt.legend(loc='upper left')
+
+# Mostrar el gráfico
+plt.show()
 
 
