@@ -89,7 +89,7 @@ def depreciacionCostoVariable():
   #Iniciamos la lista que contendrá la depreciación en cada año
   depreciacionTotal = []
   #Lo calculamos como costoDesarrollo/VidaUtil
-  costoDesarrollo = triangular(600,650,850)
+  costoDesarrollo = triangular(600,650,850)*1000000
   dep = costoDesarrollo//5
   #En un ciclo que itere los 5 años
   for i in range(5):
