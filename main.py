@@ -147,12 +147,8 @@ def calcularN(tipoCosto):
   muestra10k = simularVPN(10000, tipoCosto)
   #Calcular la desviación estándar de la muestra
   desviacion = np.std(muestra10k)
-  #Número de precisión dado por el ejercicio
-  precision = 1000000
-  #Valor de X para el nivel de confianza 95%
-  z = 1.96
   #Usar la fórmula para hallar el número n requerido
-  n = ((z**2) * (desviacion**2)) / (precision**2)
+  n = ((1.96**2) * (desviacion**2)) / (1000000**2)
   #retornamos los valores
   return int(n),desviacion
 
