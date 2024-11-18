@@ -282,14 +282,31 @@ print()
 print("De una muestra de 10000 simulaciones con costo fijo, la desviación estándar de dicha muestra es de: ", desviacion)
 print("El número de simulaciones requeridas es: ", nRequerido)
 resultadosFijo = simularNVecesFijo(nRequerido)
-print(np.std(resultadosFijo))
+
+# Cálculo del intervalo de confianza del 95%
+Z = 1.96  # valor z para 95% de confianza
+desVPNFIJO = np.std(resultadosFijo)
+mediaVPNFIJO = np.mean(resultadosFijo)
+margenError = Z * (desVPNFIJO / math.sqrt(nRequerido))
+ic_inferior = mediaVPNFIJO - margenError
+ic_superior = mediaVPNFIJO + margenError
+print("IC 95% Inferior: ", ic_inferior)
+print("IC 95% Superior: ", ic_superior)
 print()
 
 nRequerido2, desviacion2 = calcularNCostoVariable()
 print("De una muestra de 10000 simulaciones con costo variable, la desviación estándar de dicha muestra es de: ", desviacion2)
 print("El número de simulaciones requeridas es: ", nRequerido2)
 resultadosVar = simularNVecesVariable(nRequerido2)
-print(np.std(resultadosVar))
+# Cálculo del intervalo de confianza del 95%
+Z = 1.96  # valor z para 95% de confianza
+desVPNVAR = np.std(resultadosVar)
+mediaVPNVAR = np.mean(resultadosFijo)
+margenError = Z * (desVPNVAR / math.sqrt(nRequerido))
+ic_inferior2 = mediaVPNVAR - margenError
+ic_superior2 = mediaVPNVAR + margenError
+print("IC 95% Inferior: ", ic_inferior2)
+print("IC 95% Superior: ", ic_superior2)
 print()
 
 
