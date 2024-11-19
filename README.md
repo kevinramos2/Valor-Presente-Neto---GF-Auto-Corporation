@@ -74,5 +74,8 @@ IC 95% Inferior:  735568767.9770379
 IC 95% Superior:  737531668.1863151
 La media para VPNs con costo variable es:  736550218.0816765
 ```
+### Histograma de Distribución del VPN
+
+![Histograma del VPN para costos fijos y variables](VPN_histograma.png)
 
 
