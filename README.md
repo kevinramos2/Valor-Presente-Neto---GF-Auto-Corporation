@@ -62,15 +62,17 @@ El código realiza los siguientes cálculos y análisis:
 ### Ejemplo de Salida
 
 ```plaintext
-De una muestra de 10000 simulaciones con costo fijo, la desviación estándar de dicha muestra es de:  12000000.0
-El número de simulaciones requeridas es:  4000
-IC 95% Inferior:  70000000.0
-IC 95% Superior:  80000000.0
-La media para VPNs con costo fijo es:  75000000.0
+De una muestra de 10000 simulaciones con costo fijo, la desviación estándar de dicha muestra es de:  55370386.977014005
+El número de simulaciones requeridas es:  11777
+IC 95% Inferior:  735358431.5423156
+IC 95% Superior:  737374306.217542
+La media para VPNs con costo fijo es:  736366368.8799288
 
-De una muestra de 10000 simulaciones con costo variable, la desviación estándar de dicha muestra es de:  13000000.0
-El número de simulaciones requeridas es:  4500
-IC 95% Inferior:  65000000.0
-IC 95% Superior:  76000000.0
-La media para VPNs con costo variable es:  70500000.0
+De una muestra de 10000 simulaciones con costo variable, la desviación estándar de dicha muestra es de:  58480557.57168865
+El número de simulaciones requeridas es:  13138
+IC 95% Inferior:  735568767.9770379
+IC 95% Superior:  737531668.1863151
+La media para VPNs con costo variable es:  736550218.0816765
+```
+
 
